@@ -10,21 +10,21 @@
 
 #define VS1053_RESET   -1     // VS1053 reset pin (not used!)
 
-#define VS1053_CS       8     // VS1053 chip select pin (output)
+#define VS1053_CS       6     // VS1053 chip select pin (output)
 #define VS1053_DCS      10    // VS1053 Data/command select pin (output)
-#define CARDCS          7     // Card chip select pin
+#define CARDCS          5     // Card chip select pin
 #define VS1053_DREQ     9     // VS1053 Data request, ideally an Interrupt pin
 
-#define LED_PIN 11
+#define LED_PIN 12
 #define LED_COUNT 8
 
 int fsrPin = A0;     // the FSR and 10K pulldown are connected to a0
 int fsrPin2 = A1;     // the FSR and 10K pulldown are connected to a0
 int fsrPin3 = A2;     // the FSR and 10K pulldown are connected to a0
-int fsrPin4 = 13;     // the FSR and 10K pulldown are connected to a0
-int fsrPin5 = 24;     // the FSR and 10K pulldown are connected to a0
-int fsrPin6 = 25;     // the FSR and 10K pulldown are connected to a0
-int fsrPin7 = 12;     // the FSR and 10K pulldown are connected to a0
+int fsrPin4 = A3;     // the FSR and 10K pulldown are connected to a0
+int fsrPin5 = A4;     // the FSR and 10K pulldown are connected to a0
+int fsrPin6 = A5;     // the FSR and 10K pulldown are connected to a0
+int fsrPin7 = 13;     // the FSR and 10K pulldown are connected to a0
 
 int fsrReading;     // the analog reading from the FSR resistor divider
 int fsrReading2;     // the analog reading from the FSR resistor divider
@@ -151,13 +151,13 @@ void loop(void) {
   Serial.print(fsrReading2);
   Serial.print(" - A2: ");
   Serial.print(fsrReading3);
-  Serial.print(" - 13: ");
+  Serial.print(" - A3: ");
   Serial.print(fsrReading4);
-  Serial.print(" - 24: ");
+  Serial.print(" - A4: ");
   Serial.print(fsrReading5);
-  Serial.print(" - 25: ");
+  Serial.print(" - A5: ");
   Serial.print(fsrReading6);
-  Serial.print(" - 12: ");
+  Serial.print(" - 13: ");
   Serial.print(fsrReading7);
   Serial.print(" - MARKER: ");
   Serial.print(marker);
@@ -230,9 +230,9 @@ void loop(void) {
     colorWipe(strip.Color(0, 0, 0), 10);
   }
   // MARKER 3
-  if (fsrReading4 > capTh-5000 && marker4 == 1) {
+  if (fsrReading4 < 150 && marker4 == 1) {
     marker4 = 0;
-  } else if (marker4 == 0 && fsrReading4 < 5000) {
+  } else if (marker4 == 0 && fsrReading4 > 150) {
     marker4 = 1;
     if (musicPlayer.playingMusic) {
       musicPlayer.stopPlaying();
@@ -242,9 +242,9 @@ void loop(void) {
     colorWipe(strip.Color(0, 0, 0), 10);
   }
   // MARKER 4
-  if (fsrReading5 > capTh-5000 && marker5 == 1) {
+  if (fsrReading5 < 150 && marker5 == 1) {
     marker5 = 0;
-  } else if (marker5 == 0 && fsrReading5 < 5000) {
+  } else if (marker5 == 0 && fsrReading5 > 150) {
     marker5 = 1;
     if (musicPlayer.playingMusic) {
       musicPlayer.stopPlaying();
@@ -254,9 +254,9 @@ void loop(void) {
     colorWipe(strip.Color(0, 0, 0), 10);
   }
   // MARKER 5
-  if (fsrReading6 > capTh-5000 && marker6 == 1) {
+  if (fsrReading6 < 150 && marker6 == 1) {
     marker6 = 0;
-  } else if (marker6 == 0 && fsrReading6 < 5000) {
+  } else if (marker6 == 0 && fsrReading6 > 150) {
     marker6 = 1;
     if (musicPlayer.playingMusic) {
       musicPlayer.stopPlaying();
